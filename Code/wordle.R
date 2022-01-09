@@ -52,6 +52,10 @@ select_probable <- function(dict=wordle_dict, include="") {
     freqs <- freqs %>%
       filter(!map_lgl(letter, function(x) grepl(x, include)))
   }
+  
+  if (nrow(freqs) == 0) {
+    return(dict)
+  }
 
   newdict = c()
   while (length(newdict) == 0) {  
@@ -86,10 +90,10 @@ wordle_dict[sample(grep(".*(a(?=.*e(?=.*s.*).*)|e(?=.*a(?=.*s.*).*)|s(?=.*a(?=.*
 select_probable()
 
 #check possible solutions
-excl <- "ecf"
-incl <- "aros"
-pos <- c("a", "", "r", "o", "s")
-neg <- c("", "r", "o", "s", "")
+excl <- "asbdfp"
+incl <- "erog"
+pos <- c("", "o", "r", "g", "e")
+neg <- c("", "e", "", "oe", "")
 get_next(excl, incl, pos, neg)
 
 # manual tests
