@@ -90,14 +90,13 @@ wordle_dict[sample(grep(".*(a(?=.*e(?=.*s.*).*)|e(?=.*a(?=.*s.*).*)|s(?=.*a(?=.*
 select_probable()
 
 #check possible solutions
-excl <- "asbdfp"
-incl <- "erog"
-pos <- c("", "o", "r", "g", "e")
-neg <- c("", "e", "", "oe", "")
+excl <- ""
+incl <- ""
+pos <- c("", "", "", "", "")
+neg <- c("", "", "", "", "")
 get_next(excl, incl, pos, neg)
 
 # manual tests
 newwordle <- reduce(excl, incl, pos, neg)
 length(newwordle)
 select_probable(newwordle, incl)
-
