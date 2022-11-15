@@ -9,7 +9,7 @@ columns <- c("1-zi-mean", "1-zi-low", "1-zi-up", "1-zi-var",
              "5-zi-mean", "5-zi-low", "5-zi-up", "5-zi-var")
 
 # private flat rent prices
-liste <- pdf_text("Varia/Data/Glauser.pdf")[38:39]
+liste <- pdf_text("Data/Glauser.pdf")[38:39]
 tmp1 <- unlist(str_split(liste[1], "\n")) %>%
   str_replace_all("\\…", "NA") %>%
   str_trim() %>%
