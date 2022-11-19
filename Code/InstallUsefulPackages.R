@@ -28,6 +28,7 @@
 # install.packages("markdown")
 # install.packages("magick")
 # install.packages("palmerpenguins")
+# install.packaages("renv")
 
 
 # load to check
@@ -57,4 +58,5 @@ library("tm")
 library("markdown")
 library("magick")
 library("palmerpenguins")
+library("renv")
 
