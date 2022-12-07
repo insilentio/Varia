@@ -29,7 +29,7 @@
 # install.packages("magick")
 # install.packages("palmerpenguins")
 # install.packaages("renv")
-
+# install.packages("RSQLite")
 
 # load to check
 library("tidyverse")
@@ -59,4 +59,5 @@ library("markdown")
 library("magick")
 library("palmerpenguins")
 library("renv")
+library("RSQLite")
 
