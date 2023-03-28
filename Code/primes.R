@@ -1,8 +1,11 @@
+library(ggplot2)
+
+
 # finde alle Primzahlen in einem bestimmten Bereich
 # von 1 bis upper
 
 # definiere oberes Limit
-upper <- 1e8
+upper <- 1e6
 
 # Variante 1, nicht sehr effizient ###################################
 # fange mit der kleinsten ungeraden Primzahl an (technische Gründe)
