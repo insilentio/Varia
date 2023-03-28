@@ -1,11 +1,22 @@
-# finde höchste Zahl n, die aus lauter verschiedenen Ziffern besteht, wobei 2*n ebenfalls aus lauter
-# verschiedenen Zahlen besteht
+#' findet höchste Zahl n, die aus lauter verschiedenen Ziffern besteht
+#' 
+#' 'get_number' findet höchste Zahl n, die aus lauter verschiedenen Ziffern besteht, wobei 2*n ebenfalls aus lauter
+#' verschiedenen Zahlen besteht
+#' 
+#' 
+#' @author insilentio 
+#' @param digits a number
+#' @return a number
+#' @example get_number(3)
+
+
 decomp <- function (x) {
   n <- floor(log10(x))
   x %/% 10^seq(n, 0) %% 10
 }
 
 get_number <- function(digits) {
+
   limit <- floor(as.integer(paste(rep(9, digits), collapse = ""))/2)
   
   for (i in seq(limit, 1)) {
