@@ -1,0 +1,134 @@
+---
+title: "Benchmarking various data file types"
+format: html
+editor: visual
+echo: false
+---
+
+```{r}
+#| label: prep
+#| output: false
+
+# taken from spsanderson.com/steveondata/posts/rtip-2023-03-24/index.html
+
+# set seed for reproducibility
+set.seed(123)
+
+# number of rows/columns in matrix
+n <- 1000
+
+# generate matrix with random normal values
+mat <- matrix(runif(n^2), nrow = n) 
+
+library(fst)
+library(arrow)
+library(rbenchmark)
+library(readr)
+library(data.table)
+library(vroom)
+library(dplyr)
+
+n = 30
+
+# Save matrix in different file formats
+write.csv(mat, "matrix.csv", row.names=FALSE)
+saveRDS(mat, "matrix.rds")
+write_fst(as.data.frame(mat), "matrix.fst")
+write_feather(as_arrow_table(as.data.frame(mat)), "matrix.arrow")
+```
+
+```{r}
+#| label: file_sizes
+
+# Get file size of each saved object
+csv_size <- file.size("matrix.csv")  / (1024^2)
+rds_size <- file.size("matrix.rds") / (1024^2)
+fst_size <- file.size("matrix.fst") / (1024^2)
+arrow_size <- file.size("matrix.arrow") / (1024^2)
+
+# Print file size in human-readable format
+print(paste("CSV file size in MB:", format(csv_size, units="auto")))
+print(paste("RDS file size in MB:", format(rds_size, units="auto")))
+print(paste("FST file size in MB:", format(fst_size, units="auto")))
+print(paste("Arrow file size in MB:", format(arrow_size, units="auto")))
+```
+
+## Benchmark read times for CSV file
+
+```{r}
+#| label: csv
+
+benchmark(
+  # CSV File
+  "read.csv" = {
+    a <- read.csv("matrix.csv")
+  },
+  "read_csv" = {
+    b <- read_csv("matrix.csv", progress = FALSE, show_col_types = FALSE)
+  },
+  "fread" = {
+    c <- fread("matrix.csv")
+  },
+  "vroom alltrep false" = {
+    d <- vroom("matrix.csv", progress = FALSE, show_col_types = FALSE)
+  },
+  
+  # Replications
+  replications = n,
+  
+  # Columns
+  columns = c(
+    "test","replications","elapsed","relative","user.self","sys.self")
+) |>
+  arrange(relative)
+```
+
+## RDS File
+
+```{r}
+#| label: rds
+
+benchmark(
+  # RDS File
+  "readRDS" = {
+    e <- readRDS("matrix.rds")
+  },
+  "read_rds" = {
+    f <- read_rds("matrix.rds")
+  },
+  
+  # Repications
+  replications = n,
+  
+  # Columns
+  columns = c(
+    "test","replications","elapsed","relative","user.self","sys.self")
+) |>
+  arrange(relative)
+```
+
+## FST / Arrow
+
+```{r}
+#| label: fst
+
+benchmark(
+  # FST
+  "read_fst" = {
+    g <- read_fst("matrix.fst")
+  },
+  
+  # Arrow
+  "arrow" = {
+    h <- read_feather("matrix.arrow")
+  },
+  
+  # Replications
+  replications = n,
+  
+  # Columns
+  columns = c(
+    "test","replications","elapsed","relative","user.self","sys.self")
+) |>
+  arrange(relative)
+```
