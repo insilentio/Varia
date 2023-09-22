@@ -2,62 +2,34 @@
 #together with dependencies, installs most of
 #packages needed in my codes
 
-# install.packages("tidyverse")
-# install.packages("caret")
-# install.packages("tidymodels")
-# install.packages("keras")
-# install.packages("e1071")
-# install.packages("doParallel")
-# install.packages("xtable")
-# install.packages("AppliedPredictiveModeling")
-# install.packages("mlbench")
-# install.packages("fastICA")
-# install.packages("randomForest")
-# install.packages("gbm")
-# install.packages("gam")
-# install.packages("Hmisc")
-# install.packages("pROC")
-# install.packages("exiftoolr")
-# install.packages("devtools")
-# install.packages("roxygen2")
-# install.packages("testthat")
-# install.packages("knitr")
-# install.packages("RSQLite")
-# install.packages("nnet")
-# install.packages("tm")
-# install.packages("markdown")
-# install.packages("magick")
-# install.packages("palmerpenguins")
-# install.packaages("renv")
-# install.packages("SQLite")
+install.packages("devtools")
 
-# load to check
-library(tidyverse)
-library(caret)
-library(tidymodels)
-library(keras)
-library(e1071)
-library(doParallel)
-library(xtable)
-library(AppliedPredictiveModeling)
-library(mlbench)
-library(fastICA)
-library(randomForest)
-library(gbm)
-library(gam)
-library(Hmisc)
-library(pROC)
-library(exiftoolr)
-library(devtools)
-library(roxygen2)
-library(testthat)
-library(knitr)
-library(RSQLite)
-library(nnet)
-library(tm)
-library(markdown)
-library(magick)
-library(palmerpenguins)
-library(renv)
-library(SQLite)
-library(esquisse)
+pkg <- c("tidyverse",
+         "tidymodels",
+         "renv",
+         "caret",
+         "keras",
+         "doParallel",
+         "mlbench",
+         "fastICA",
+         "randomForest",
+         "gbm",
+         "gam",
+         "Hmisc",
+         "magick",
+         "exiftoolr",
+         "knitr",
+         "RSQLite",
+         "nnet",
+         "tm",
+         "markdown",
+         "esquisse")
+
+# load
+for (i in seq(pkg)) {
+  if (!library(pkg[i], character.only = TRUE, logical.return = TRUE)) {
+    install.packages(pkg[i])
+    library(pkg[i], character.only = TRUE)
+  }
+}
+
