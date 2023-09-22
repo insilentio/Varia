@@ -1,0 +1,409 @@
+---
+title: "R-bloggers examples"
+format: html
+editor: visual
+---
+
+## 
+
+# Correlation Plots
+
+```{r}
+# Load the required packages
+library(ggplot2)
+library(corrplot)
+library(ggcorrplot)
+
+
+# Calculate the correlation matrix
+cor_matrix <- cor(mtcars)
+
+# Create a basic correlation heatmap using corrplot
+corrplot(cor_matrix, method = "color")
+
+
+# Calculate the correlation matrix
+cor_matrix_iris <- cor(iris[, 1:4])  # Consider only numeric columns
+
+# Create a more visually appealing heatmap
+ggcorrplot(cor_matrix_iris, type = "lower", colors = c("#6D9EC1", "white", "#E46726"))
+```
+
+# Biplots
+
+### Introduction
+
+When it comes to analyzing multivariate data, Principal Component Analysis (PCA) is a powerful technique that can help us uncover hidden patterns, reduce dimensionality, and gain valuable insights. One of the most informative ways to visualize the results of a PCA is by creating a biplot, and in this blog post, we'll dive into how to do this using the biplot() function in R. To make it more practical, we'll use the USArrests dataset to demonstrate the process step by step.
+
+### What is a Biplot?
+
+Before we get into the details, let's briefly discuss what a biplot is. A biplot is a graphical representation of a PCA that combines both the scores and loadings into a single plot. The scores represent the data points projected onto the principal components, while the loadings indicate the contribution of each original variable to the principal components. By plotting both, we can see how variables and data points relate to each other in a single chart, making it easier to interpret and analyze the PCA results.
+
+```{r}
+# Load required packages
+library(stats)
+
+# Perform PCA
+pca_result <- prcomp(USArrests, scale = TRUE)
+
+# Create a biplot
+biplot(pca_result)
+```
+
+## 
+
+# Exploring the Third Dimension with R: A Guide to the persp() Function
+
+## What is persp()?
+
+The `persp()` function in R stands for "perspective plot," and it's part of the base graphics package. It allows you to create three-dimensional surface plots by representing a matrix of heights or values as a surface, with the x and y coordinates defining the grid and the z coordinates representing the height of the surface at each point.
+
+## The Syntax of persp()
+
+Before we dive into examples, let's take a look at the basic syntax of the `persp()` function:
+
+``` r
+persp(x, y, z, theta = 30, phi = 30, col = "lightblue",
+      border = "black", scale = TRUE, ... )
+```
+
+-   `x`, `y`, and `z` are the vectors or matrices representing the x, y, and z coordinates of the data points.
+
+-   `theta` and `phi` control the orientation of the plot. `theta` sets the azimuthal angle (rotation around the z-axis), and `phi` sets the polar angle (rotation from the xy-plane). These angles are in degrees.
+
+-   `col` and `border` control the color of the surface and its border, respectively.
+
+-   `scale` is a logical value that determines whether the axes should be scaled to match the data range.
+
+-   Additional parameters can be passed as `...` to customize the plot further.
+
+Now, let's jump into some examples to see how `persp()` works in action!
+
+## Example 1: Creating a Simple Surface Plot
+
+```{r}
+# Create data for a simple surface plot
+x <- seq(-5, 5, length.out = 50)
+y <- seq(-5, 5, length.out = 50)
+z <- outer(x, y, function(x, y) cos(sqrt(x^2 + y^2)))
+
+# Create a 3D surface plot
+persp(x, y, z, col = "lightblue", border = "black")
+```
+
+## Example 2: Customizing the Perspective
+
+```{r}
+# Create data for a surface plot
+x <- seq(-10, 10, length.out = 100)
+y <- seq(-10, 10, length.out = 100)
+z <- outer(x, y, function(x, y) 2 * sin(sqrt(x^2 + y^2)) / sqrt(x^2 + y^2))
+
+# Create a customized 3D surface plot
+persp(x, y, z, col = "lightblue", border = "black", theta = 60, phi = 20)
+```
+
+## Example 3: Scaling the Axes
+
+```{r}
+# Create data for a surface plot
+x <- seq(-2, 2, length.out = 50)
+y <- seq(-2, 2, length.out = 50)
+z <- outer(x, y, function(x, y) exp(-x^2 - y^2))
+
+# Create a 3D surface plot with scaled axes
+persp(x, y, z, col = "lightblue", border = "black", scale = TRUE)
+```
+
+## Example 4: Multiple Plots
+
+```{r}
+# Create data
+x <- seq(-10, 10, length.out = 50)
+y <- seq(-10, 10, length.out = 50)
+z1 <- outer(x, y, function(x, y) dnorm(sqrt(x^2 + y^2)))
+z2 <- outer(x, y, function(x, y) dnorm(sqrt((x-2)^2 + (y-2)^2)))
+z3 <- outer(x, y, function(x, y) dnorm(sqrt((x+2)^2 + (y+2)^2)))
+
+# Plot data
+par(mfrow = c(1, 3))
+
+persp(x, y, z1, theta = 30, phi = 30, col = "lightblue", border = NA, shade = 0.5, ticktype = "detailed", nticks = 5, xlab = "X", ylab = "Y", zlab = "Z1")
+persp(x, y, z2, theta = 30, phi = 30, col = "lightblue", border = NA, shade = 0.5, ticktype = "detailed", nticks = 5, xlab = "X", ylab = "Y", zlab = "Z2")
+persp(x, y, z3, theta = 30, phi = 30, col = "lightblue", border = NA, shade = 0.5, ticktype = "detailed", nticks = 5, xlab = "X", ylab = "Y", zlab = "Z3")
+
+par(mfrow = c(1, 1))
+```
+
+In this example, we create data for three different Gaussian distributions. We define the x- and y-axes and use the outer() function to calculate the z-values based on the normal distribution. We then use the persp() function to plot the data. We set the color to light blue, the border to NA, and the shading to 0.5. We also set the tick type to detailed and the number of ticks to 5. Finally, we label the x-, y-, and z-axes. We use the par() function to create multiple 3D plots in one figure.
+
+# **How to Plot Multiple Plots on the Same Graph in R**
+
+## **Example 1: Overlaying Multiple Lines on the Same Graph**
+
+In this example, we will overlay two lines on the same graph. This is a great way to compare trends between two variables in a single plot.
+
+```{r}
+# Set the seed for reproducibility
+set.seed(123)
+
+# Generate the data
+x <- 1:25
+y1 <- cumsum(rnorm(25))
+y2 <- cumsum(rnorm(25))
+
+# Create the plot
+plot(x, y1, type = 'l', col = 'blue', ylim = c(min(y1, y2), max(y1, y2)), 
+     xlab = 'X-axis', ylab = 'Y-axis', main = 'Overlaying Multiple Lines')
+lines(x, y2, col = 'red')
+legend('topleft', legend = c('Line 1', 'Line 2'), col = c('blue', 'red'), lty = 1)
+```
+
+## **Example 2: Side-by-Side Plots**
+
+Sometimes, you might want to display multiple plots side by side to compare different variables. We can achieve this using the `par()` function and layout options.
+
+```{r}
+# Create a side-by-side layout
+par(mfrow = c(1, 2))
+
+# Create the first plot
+plot(x, y1, type = 'l', col = 'blue', 
+     xlab = 'X-axis', ylab = 'Y-axis', main = 'Side-by-Side Plots (1)')
+
+# Create the second plot
+plot(x, y2, type = 'l', col = 'red',
+     xlab = 'X-axis', ylab = 'Y-axis', main = 'Side-by-Side Plots (2)')
+
+# Reset Par
+par(mfrow = c(1, 1))
+```
+
+## **Example 3: Stacked Plots**
+
+Stacked plots are useful when you want to compare the overall trend while preserving the individual patterns of different variables. Here, we stack two line plots on top of each other.
+
+```{r}
+par(mfrow = c(2, 1), mar = c(2, 4, 4, 2))
+
+# Create the first plot
+plot(x, y1, type = 'l', col = 'blue', 
+     xlab = 'X-axis', ylab = 'Y-axis', main = 'Stacked Plots')
+
+# Create the second plot
+plot(x, y2, type = 'l', col = 'red',
+     xlab = 'X-axis', ylab = 'Y-axis', main = 'Side-by-Side Plots (2)')
+
+par(mfrow = c(1, 1))
+```
+
+The first line of code, `par(mfrow = c(2, 1), mar = c(2, 4, 4, 2))`, tells R to create a 2x1 (two rows, one column) plot with margins of 2, 4, 4, and 2. This means that the two plots will be stacked on top of each other.
+
+The next line of code, `plot(x, y1, type = 'l', col = 'blue', xlab = 'X-axis', ylab = 'Y-axis', main = 'Stacked Plots')`, create the first plot. The `plot()` function creates a plot of the data in the vectors x and y1. The `type = 'l'`argument tells R to create a line plot, the col = \'blue\' argument tells R to use blue color for the line, and the other arguments set the labels for the axes and the title of the plot.
+
+The fourth line of code, `plot(x, y2, type = 'l', col = 'red', xlab = 'X-axis', ylab = 'Y-axis', main = 'Side-by-Side Plots (2)')`, create the second plot. This plot is similar to the first plot, except that the line is red.
+
+The last line of code, `par(mfrow = c(1, 1))`, resets the plot to a single plot.
+
+# **Histograms with Two or More Variables in R**
+
+# **Introduction**
+
+Histograms are powerful tools for visualizing the distribution of a single variable, but what if you want to compare the distributions of two variables side by side? In this blog post, we\'ll explore how to create a histogram of two variables in R, a popular programming language for data analysis and visualization.
+
+We\'ll cover various scenarios, from basic histograms to more advanced techniques, and explain the code step by step in simple terms. So, grab your favorite dataset or generate some random data, and let\'s dive into the world of dual-variable histograms!
+
+## **Basic Dual-Variable Histogram**
+
+Let\'s begin with the most straightforward scenario: creating a histogram of two variables using the `hist()` function. We\'ll use the built-in `mtcars` dataset, which contains information about various car models.
+
+```{r}
+x1 <- rnorm(1000)
+x2 <- rnorm(1000, mean = 2)
+minx <- min(x1, x2)
+maxx <- max(x1, x2)
+
+# Create a basic dual-variable histogram
+hist(x1, main="Histogram of rnorm with mean 0 and 2", xlab="", 
+     ylab="", col="lightblue", xlim = c(minx, maxx))
+hist(x2, xlab="", 
+     ylab="", col="lightgreen", add=TRUE)
+legend("topright", legend=c("Mean: 0", "Mean: 2"), fill=c("lightblue", "lightgreen"))
+```
+
+In summary, the code generates a dual-variable histogram of two vectors of random normal numbers with different means. The histogram shows the distribution of values for each variable and allows for easy comparison between the two variables.
+
+## **Dual-Variable Histogram with Transparency**
+
+Adding transparency to the histograms can make the visualization more informative when the bars overlap. We can achieve this by setting the `alpha` parameter in the `col`argument. Let\'s use the same dataset and create a dual-variable histogram with transparency:
+
+```{r}
+# Create a dual-variable histogram with transparency
+minx <- min(mtcars$mpg, mtcars$hp)
+maxx <- max(mtcars$mpg, mtcars$hp)
+hist(
+  mtcars$mpg, 
+  main="Histogram of MPG and Horsepower", 
+  xlab="Value",
+  ylab="Frequency", 
+  col=rgb(0, 0, 1, alpha=0.5), 
+  xlim=c(minx, maxx))
+hist(
+  mtcars$hp, 
+  col=rgb(1, 0, 0, alpha=0.5), 
+  add=TRUE
+  )
+legend("topright", legend=c("MPG", "Horsepower"), fill=c(rgb(0, 0, 1, alpha=0.5), rgb(1, 0, 0, alpha=0.5)))
+```
+
+Here, we use the `rgb()` function to set the color with transparency. The `alpha` parameter controls the transparency level, with values between 0 (completely transparent) and 1 (completely opaque).
+
+## **Side-by-Side Histograms**
+
+If you prefer to display the histograms side by side, you can use the `par()` function to adjust the layout. Here\'s an example:
+
+```{r}
+# Set up a side-by-side layout
+par(mfrow=c(1, 2))
+
+# Create side-by-side histograms
+hist(mtcars$mpg, main="Histogram of MPG", xlab="Miles Per Gallon", 
+     ylab="Frequency", col="lightblue", xlim=c(10, 35))
+hist(mtcars$hp, main="Histogram of Horsepower", xlab="Horsepower", 
+     ylab="Frequency", col="lightgreen")
+
+par(mfrow=c(1,1))
+```
+
+In this code, we use `par(mfrow=c(1, 2))` to set up a 1x2 layout, which means two plots will appear side by side.
+
+# **Exploring Data with Scatter Plots by Group in R**
+
+# **Data Preparation:**
+
+For this tutorial, we\'ll use a sample dataset called `iris`. It\'s included in R and contains information about three different species of iris flowers. To begin, load the dataset:
+
+```{r}
+# Load the iris dataset
+data(iris)
+
+# View the first 6 rows of the dataset
+head(iris)
+```
+
+This dataset has four numeric variables: Sepal.Length, Sepal.Width, Petal.Length, and Petal.Width. The fifth variable, Species, represents the different iris species (Setosa, Versicolor, and Virginica). We\'ll use this categorical variable to group our data for scatter plots.
+
+## **Using `ggplot2`**
+
+### **Creating Scatter Plots by Group:**
+
+```{r}
+# Load the ggplot2 library
+library(ggplot2)
+```
+
+#### **Example 1: Basic Scatter Plot**
+
+Let\'s start with a basic scatter plot that shows the relationship between Sepal.Length and Sepal.Width for all iris species. We\'ll color the points by species to distinguish them:
+
+```{r}
+# Create a basic scatter plot
+ggplot(
+  data = iris, 
+  aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point() +
+  labs(title = "Sepal Length vs. Sepal Width by Species",
+       x = "Sepal Length",
+       y = "Sepal Width") +
+  theme_minimal()
+```
+
+#### **Example 2: Faceted Scatter Plot**
+
+Now, let\'s take it a step further and create separate scatter plots for each iris species using faceting:
+
+```{r}
+# Create faceted scatter plots
+ggplot(
+  data = iris, 
+  aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point() +
+  facet_wrap(~Species) +
+  labs(title = "Sepal Length vs. Sepal Width by Species",
+       x = "Sepal Length",
+       y = "Sepal Width") +
+  theme_minimal()
+```
+
+#### **Example 3: Customized Scatter Plot**
+
+Let\'s customize our scatter plot further by adding regression lines and adjusting point aesthetics:
+
+```{r}
+# Create a customized scatter plot
+ggplot(
+  data = iris, 
+  aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size = 3, alpha = 0.7, shape = 19) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Customized Sepal Length vs. Sepal Width by Species",
+       x = "Sepal Length",
+       y = "Sepal Width") +
+  theme_minimal()
+```
+
+```         
+`geom_smooth()` using formula = 'y ~ x
+```
+
+## **Using Base R**
+
+### **Example 1: Basic Scatter Plot in Base R**
+
+To create a basic scatter plot in base R, we can use the `plot()` function. Here\'s how to create a scatter plot of Sepal.Length vs. Sepal.Width by grouping on the \"Species\" variable:
+
+```{r}
+# Create a basic scatter plot
+plot(iris$Sepal.Length, iris$Sepal.Width, col = iris$Species, 
+     pch = 19, main = "Sepal Length vs. Sepal Width by Species",
+     xlab = "Sepal Length", ylab = "Sepal Width")
+legend("topright", legend = levels(iris$Species), col = 1:3, pch = 19)
+```
+
+### **Example 2: Faceted Scatter Plot in Base R**
+
+To create faceted scatter plots in base R, we can use the `split()` function to split the data by the \"Species\" variable and then create individual scatter plots for each group:
+
+```{r}
+# Split the data by species
+split_data <- split(iris, iris$Species)
+
+# Create faceted scatter plots
+par(mfrow = c(1, 3))  # Arrange plots in one row and three columns
+for (i in 1:3) {
+  plot(split_data[[i]]$Sepal.Length, split_data[[i]]$Sepal.Width, 
+       pch = 19, main = levels(iris$Species)[i], 
+       xlab = "Sepal Length", ylab = "Sepal Width")
+}
+
+par(mfrow = c(1, 1))
+```
+
+### **Example 3: Customized Scatter Plot in Base R**
+
+To create a customized scatter plot in base R, we can adjust various graphical parameters. Here\'s an example with customized aesthetics and regression lines:
+
+```{r}
+# Create a customized scatter plot with regression lines
+plot(iris$Sepal.Length, iris$Sepal.Width, col = iris$Species, 
+     pch = 19, main = "Customized Sepal Length vs. Sepal Width by Species",
+     xlab = "Sepal Length", ylab = "Sepal Width")
+legend("topright", legend = levels(iris$Species), col = 1:3, pch = 19)
+
+# Add regression lines
+for (i in 1:3) {
+  group_data <- split_data[[i]]
+  lm_fit <- lm(Sepal.Width ~ Sepal.Length, data = group_data)
+  abline(lm_fit, col = i)
+}
+```
