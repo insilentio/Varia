@@ -14,7 +14,7 @@ x_train <- x_train / 255
 x_test <- x_test / 255
 
 y_train <- to_categorical(y_train, 10)
-y_test <- to_categorical(y_test, 10)s
+y_test <- to_categorical(y_test, 10)
 
 #build model
 model <- keras_model_sequential() 
