@@ -1,0 +1,144 @@
+## Aufgabe
+
+#### Ausgangslage:
+
+Ihr habt in der Schule was vergessen und bekommt eine Strafaufgabe von der Lehrerin. Weil sie weiss, dass Ihr gut mit Zahlen seid, gibt es eine Matheaufgabe zu lösen, und zwar eine schöne (![verwirrt](https://statics.teams.cdn.office.net/evergreen-assets/personal-expressions/v2/assets/emoticons/veryconfused/default/20_f.png?v=v19){alt="verwirrt"}) Sätzliaufgabe.
+
+| *"Zähle zuerst alle Zahlen von 1 bis 100 zusammen. Dann multiplizierst Du das Ergebnis mit sich selbst.*
+| *Als nächstes berechne von allen Zahlen von 1 bis 100 zuerst deren Quadratzahlen und zähle diese dann zusammen.*
+| *Zum Schluss berechne den Unterschied zwischen den beiden Resultaten."*
+
+#### Wie machen wir das?
+
+Wir brauchen dazu nur wenig Programmierkenntnisse:
+
+-   Reihen bilden
+
+-   Summe berechnen
+
+-   Quadrate berechnen
+
+-   Subtraktion berechnen ("Unterschied")
+
+-   Daten speichern
+
+Und das geht so:
+
+```{r Reihen}
+
+1:5
+
+10:1
+```
+
+```{r Summen}
+
+sum(1:5)
+
+sum(1:50)
+```
+
+```{r Quadrate}
+
+5^2
+
+50^2
+```
+
+```{r Subtraktion}
+
+10 - 5
+```
+
+```{r Speichern}
+
+a <- 5
+
+b <- "mein Geheimnis"
+
+# und wieder abrufen
+print(a)
+
+b
+```
+
+#### Also, legen wir los!
+
+a)  *alle Zahlen von 1 bis 100*
+
+    Das tönt doch nach einer Reihe. Wir bilden eine Reihe von 1 bis 100 und speichern sie gleich ab.
+
+```{r}
+
+a <- 1:100
+
+```
+
+b)  *Zähle zuerst alle Zahlen von 1 bis 100 zusammen*
+
+    Zusammenzählen heisst nichts anderes als die Summe bilden.
+
+    Wir bilden die Summe unserer Reihe und speichern sie wieder ab unter einem neuen Namen.
+
+```{r}
+
+b <- sum(a)
+b
+
+```
+
+c)  *Dann multiplizierst Du das Ergebnis mit sich selbst*
+
+    Mit sich selbst multiplizieren heisst nichts anderes als das Quadrat berechnen: z.B. 4 · 4.\
+    Also berechnen wir das Quadrat von der vorherigen Zahl b) (und speichern es ab).
+
+```{r}
+
+c <- b^2
+c
+
+```
+
+d)  *von allen Zahlen von 1 bis 100 zuerst deren Quadratzahlen*
+
+    Bei diesem Teil der Aufgabe müssen wir also zuerst die Quadratzahlen berechnen und abspeichern. Das können wir ja schon gut.
+
+```{r}
+
+d <- a^2
+
+```
+
+e)  *zähle diese dann zusammen*
+
+    Zusammenzählen heisst wieder wie bei b) eine Summe bilden. Der Unterschied ist, dass wir nun schon die quadrierten Zahlen von d) nehmen.
+
+    Ist diese Zahl kleiner als die andere Summe von weiter oben?
+
+```{r}
+
+e <- sum(d)
+e
+
+```
+
+f)  *berechne den Unterschied zwischen den beiden Resultaten*
+
+    Das ist ja eine ganz einfache Minusrechnung. Wir berechnen also die Differenz von c) und e)
+
+```{r}
+
+c - e
+
+```
+
+Puuh, Problem rechtzeitig gelöst! ![Erleichtert](https://statics.teams.cdn.office.net/evergreen-assets/personal-expressions/v2/assets/emoticons/whew/default/20_f.png?v=v26){alt="Erleichtert" width="20"}
+
+Bonus:
+
+Und so sieht das dann in einer Zeile aus:
+
+```{r}
+
+sum(1:100)^2 - sum((1:100)^2)
+```
