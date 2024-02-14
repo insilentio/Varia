@@ -4,6 +4,7 @@
 # reorder rows
 # write into clipboard
 
+# there is an unsolved problem with umlaute (of course... it's windows, isn't it, what a crap)
 
 projects <- read.delim("clipboard", header = FALSE) |>
   unique()
