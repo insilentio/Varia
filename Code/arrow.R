@@ -18,5 +18,16 @@ fs::file_info(c(parquet, csv))[, "size"]
 #also in column storage mode
 #careful, dataset is really big:
 #data_nyc = "data/nyc-taxi"
-open_dataset("//szh.loc/ssz/users/sszbad/Download/yellow_tripdata_2023-11.parquet")
-write_dataset("data_nyc/nyc_arrow", partitioning = c("year", "month"), format = "arrow")
+data_nyc = "data/nyc-taxi"
+open_dataset("s3://voltrondata-labs-datasets/nyc-taxi") |>
+  dplyr::filter(year %in% 2012:2021) |> 
+  write_dataset(data_nyc, partitioning = c("year", "month"))
+
+nrow(open_dataset(data_nyc))
+
+open_dataset(data_nyc)
+
+open_dataset(file.path(data_path, "year=2019")) |>
+  write_dataset("data/nyc-taxi-arrow", partitioning = "month", 
+                format = "arrow")
+
