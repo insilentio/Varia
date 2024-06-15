@@ -14,4 +14,4 @@ gen_values <- function(data, n = 1e9, format = "csv"){
   values |> write_parquet("Code/1BRC/measurements.parquet")
 }
 
-gen_values(stations)
+# gen_values(stations)
