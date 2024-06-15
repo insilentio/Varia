@@ -1,6 +1,8 @@
 library(data.table)
 
 process_file_datatable <- function(file_name) {
+  gc()
+  
   dt <- fread(paste0(file_name, ".txt"), sep = ";", col.names = c("station_name", "measurement"))
   dt_summary <- dt[, .(
     min_measurement = min(measurement),
@@ -24,4 +26,4 @@ process_file_datatable <- function(file_name) {
   output
 }
 
-# system.time(process_file_datatable("Code/1BRC/measurements.txt"))
+# system.time(process_file_datatable("Code/1BRC/measurements"))

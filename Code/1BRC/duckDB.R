@@ -1,7 +1,10 @@
 library(duckdb)
 library(stringr)
+library(arrow)
 
 process_file_duckdb <- function(file_name, parquet = FALSE) {
+  gc()
+  
   con = dbConnect(duckdb())
   
   if (!parquet) {
@@ -38,4 +41,4 @@ process_file_duckdb <- function(file_name, parquet = FALSE) {
     paste0(collapse = ", ")
 }
 
-# system.time(process_file_duckdb("Code/1BRC/measurements.txt"))
+# system.time(process_file_duckdb("Code/1BRC/measurements"))

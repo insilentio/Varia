@@ -20,8 +20,9 @@ bm <- bench::mark(
         DuckDB = process_file_duckdb(filename),
         dplyr_parquet = process_file_dplyr(filename, parquet = TRUE),
         DuckDB_parquet = process_file_duckdb(filename, parquet = TRUE),
-        iterations = 5,
-        check = FALSE)
+        iterations = 3,
+        check = FALSE,
+        filter_gc = FALSE)
 
 bm
 plot(bm)

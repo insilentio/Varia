@@ -2,6 +2,8 @@ library(foreach)
 library(doParallel)
 
 get_file_chunks <- function(file_name) {
+  gc()
+  
   n_workers <- detectCores() - 1
   file_size <- file.info(paste0(file_name, ".txt"))$size
   chunk_size <- ceiling(file_size / n_workers)

@@ -1,6 +1,6 @@
 library(readr)
 library(dplyr)
-library(arrow)
+
 load("Code/1BRC/stations.Rdata")
 
 gen_values <- function(data, n = 1e9, format = "csv"){

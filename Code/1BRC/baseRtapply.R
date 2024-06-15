@@ -1,4 +1,6 @@
 process_file_tapply <- function(file_name) {
+  gc()
+  
   df <- read.delim(
     file = paste0(file_name, ".txt"),
     header = TRUE,
@@ -29,4 +31,4 @@ process_file_tapply <- function(file_name) {
 }
 
 
-# system.time(process_file_tapply("Code/1BRC/measurements.txt"))
+# system.time(process_file_tapply("Code/1BRC/measurements"))

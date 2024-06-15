@@ -1,4 +1,6 @@
 process_file_aggregate <- function(file_name) {
+  gc()
+  
   df <- read.delim(
     file = paste0(file_name, ".txt"),
     header = TRUE,
@@ -27,4 +29,4 @@ process_file_aggregate <- function(file_name) {
 }
 
 
-# system.time(process_file_aggregate("Code/1BRC/measurements.txt"))
+# system.time(process_file_aggregate("Code/1BRC/measurements"))

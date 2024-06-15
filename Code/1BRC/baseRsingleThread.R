@@ -1,4 +1,6 @@
 process_file_single <- function(file_name) {
+  gc()
+  
   neutral_values <- c(100, -100, 0, 0)
   result <- new.env()
   con <- file(paste0(file_name, ".txt"), "r")
@@ -30,5 +32,5 @@ process_file_single <- function(file_name) {
 }
 
 
-# system.time(process_file_single("Code/1BRC/measurements.txt"))
+# system.time(process_file_single("Code/1BRC/measurements"))
 
