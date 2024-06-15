@@ -1,7 +1,7 @@
 library(data.table)
 
 process_file_datatable <- function(file_name) {
-  dt <- fread(file_name, sep = ";", col.names = c("station_name", "measurement"))
+  dt <- fread(paste0(file_name, ".txt"), sep = ";", col.names = c("station_name", "measurement"))
   dt_summary <- dt[, .(
     min_measurement = min(measurement),
     mean_measurement = mean(measurement),

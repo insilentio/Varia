@@ -3,7 +3,7 @@ library(doParallel)
 
 get_file_chunks <- function(file_name) {
   n_workers <- detectCores() - 1
-  file_size <- file.info(file_name)$size
+  file_size <- file.info(paste0(file_name, ".txt"))$size
   chunk_size <- ceiling(file_size / n_workers)
   
   con <- file(file_name, "r")

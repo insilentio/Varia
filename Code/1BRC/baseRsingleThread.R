@@ -1,7 +1,7 @@
 process_file_single <- function(file_name) {
   neutral_values <- c(100, -100, 0, 0)
   result <- new.env()
-  con <- file(file_name, "r")
+  con <- file(paste0(file_name, ".txt"), "r")
   
   while (length(line <- readLines(con, n = 1, warn = FALSE)) > 0) {
     parts <- strsplit(line, split = ";", fixed = TRUE)[[1]]

@@ -1,6 +1,6 @@
 process_file_tapply <- function(file_name) {
   df <- read.delim(
-    file = file_name,
+    file = paste0(file_name, ".txt"),
     header = TRUE,
     sep = ";",
     col.names = c("station_name", "measurement")
