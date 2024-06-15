@@ -1,29 +1,21 @@
 library(dplyr)
+library(data.table)
 
 process_file_dplyr <- function(file_name) {
-  df <- read.delim(
-    file = file_name,
-    header = FALSE,
-    sep = ";",
-    col.names = c("station_name", "measurement")
-  ) %>%
-    group_by(station_name) %>%
+  fread(file_name,
+        header = TRUE,
+        sep = ";",
+        colClasses = c("character", "numeric")) |>
+    group_by(station_name) |> 
     summarise(
       min_measurement = min(measurement),
       mean_measurement = mean(measurement),
       max_measurement = max(measurement)
-    ) %>%
-    arrange(station_name)
-  
-  
-  output <- "{"
-  for (i in 1:nrow(df)) {
-    row <- df[i, ]
-    output <- paste0(output, row$station_name, "=", sprintf("%.1f/%.1f/%.1f, ", row$min_measurement, row$mean_measurement, row$max_measurement))
-  }
-  output <- substr(output, 1, nchar(output) - 2)
-  output <- paste0(output, "}")
-  output
+    ) |> 
+    arrange(station_name) |>
+    mutate(out = paste0(station_name, "=/", min_measurement, "/", round(mean_measurement, 1), "/", max_measurement)) |> 
+    pull(out) |>
+    paste0(collapse = ", ")
 }
 
 

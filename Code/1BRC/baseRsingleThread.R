@@ -25,7 +25,7 @@ process_file_single <- function(file_name) {
     mean_value <- values[[3]] / values[[4]]
     sprintf("%s=%.1f/%.1f/%.1f", station_name, min_value, mean_value, max_value)
   })
-  output <- paste0("{", paste(lines, collapse = ", "), "}")
+  output <- paste(lines, collapse = ", ")
   output
 }
 

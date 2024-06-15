@@ -1,7 +1,7 @@
 process_file_aggregate <- function(file_name) {
   df <- read.delim(
     file = file_name,
-    header = FALSE,
+    header = TRUE,
     sep = ";",
     col.names = c("station_name", "measurement")
   )
@@ -17,13 +17,12 @@ process_file_aggregate <- function(file_name) {
   res <- aggregate(measurement ~ station_name, data = df, FUN = summarize)
   res <- do.call(data.frame, res)
   
-  output <- "{"
+  output <- ""
   for (i in 1:nrow(res)) {
     row <- res[i, ]
     output <- paste0(output, row$station_name, "=", sprintf("%.1f/%.1f/%.1f, ", row$measurement.min, row$measurement.mean, row$measurement.max))
   }
   output <- substr(output, 1, nchar(output) - 2)
-  output <- paste0(output, "}")
   output
 }
 

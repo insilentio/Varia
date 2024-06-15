@@ -18,12 +18,12 @@ bm <- bench::mark(
         dplyr=process_file_dplyr(filename),
         data.table=process_file_datatable(filename),
         DuckDB=process_file_duckdb(filename),
-        iterations = 3,
+        iterations = 5,
         check = FALSE)
 
 bm
 plot(bm)
 
-bench::mark(DuckDB=process_file_duckdb(filename),
+bm <- bench::mark(DuckDB=process_file_duckdb(filename),
             iterations = 10,
             check = FALSE)

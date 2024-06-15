@@ -82,16 +82,14 @@ process_file_multi <- function(file_name) {
   
   result_fmt <- result_fmt[order(names(result_fmt))]
   
-  output <- "{"
+  output <- ""
   for (station_name in names(result_fmt)) {
     min_value <- result_fmt[[station_name]][1]
     mean_value <- result_fmt[[station_name]][5]
     max_value <- result_fmt[[station_name]][2]
     output <- paste0(output, station_name, "=", sprintf("%.1f/%.1f/%.1f, ", min_value, mean_value, max_value))
   }
-  
   output <- substr(output, 1, nchar(output) - 2)
-  output <- paste0(output, "}")
   output
   
   stopCluster(cluster)

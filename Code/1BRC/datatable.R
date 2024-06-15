@@ -12,7 +12,7 @@ process_file_datatable <- function(file_name) {
   
   setkey(dt_summary, station_name)
   
-  output <- "{"
+  output <- ""
   for (i in 1:nrow(dt_summary)) {
     row <- dt_summary[i, ]
     output <- paste0(
@@ -21,9 +21,7 @@ process_file_datatable <- function(file_name) {
     )
   }
   output <- substr(output, 1, nchar(output) - 2)
-  output <- paste0(output, "}")
   output
 }
-
 
 # system.time(process_file_datatable("Code/1BRC/measurements.txt"))
