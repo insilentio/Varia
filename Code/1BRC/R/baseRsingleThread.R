@@ -32,5 +32,5 @@ process_file_single <- function(file_name) {
 }
 
 
-# system.time(process_file_single("Code/1BRC/measurements"))
+# system.time(process_file_single("Data/measurements"))
 

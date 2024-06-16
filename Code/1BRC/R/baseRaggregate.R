@@ -1,3 +1,6 @@
+# using base R aggregate function
+# wasn't able to get this to run due to high memory allocation
+
 process_file_aggregate <- function(file_name) {
   gc()
   
@@ -29,4 +32,4 @@ process_file_aggregate <- function(file_name) {
 }
 
 
-# system.time(process_file_aggregate("Code/1BRC/measurements"))
+# system.time(process_file_aggregate("Data/measurements"))

@@ -11,7 +11,9 @@ process_file_dplyr <- function(file_name, parquet = FALSE) {
           sep = ";",
           colClasses = c("character", "numeric"))
   } else {
-    df <- read_parquet(paste0(file_name, ".parquet"))
+    # this creates an arrow object. Hence the following dplyr verbs get translated into
+    # arrow and run in Acero (arrow query engine).
+    df <- open_dataset(file.path(paste0(file_name, ".parquet")))
   }
   
   df |>   
@@ -28,4 +30,4 @@ process_file_dplyr <- function(file_name, parquet = FALSE) {
   
 }
 
-# system.time(process_file_dplyr("Code/1BRC/measurements", parquet=TRUE))
+# system.time(process_file_dplyr("Data/measurements", parquet=TRUE))

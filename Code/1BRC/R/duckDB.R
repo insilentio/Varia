@@ -11,9 +11,10 @@ process_file_duckdb <- function(file_name, parquet = FALSE) {
     df <- dbGetQuery(con,
                      str_glue("SELECT
                                 station_name,
-                                min(measurement) as min_measurement,
-                                cast(avg(measurement) as decimal(8, 1)) as mean_measurement,
-                                max(measurement) as max_measurement
+                                min(measurement) as minm,
+                                cast(avg(measurement) as decimal(8, 1)) as meanm,
+                                max(measurement) as maxm,
+                                concat(station_name, '=/', minm, '/', meanm, '/', maxm) as out
                               FROM read_csv(
                                 '{file_name}.txt',
                                 header=true,
@@ -25,9 +26,10 @@ process_file_duckdb <- function(file_name, parquet = FALSE) {
     df <- dbGetQuery(con,
                      str_glue("SELECT
                                 station_name,
-                                min(measurement) as min_measurement,
-                                cast(avg(measurement) as decimal(8, 1)) as mean_measurement,
-                                max(measurement) as max_measurement
+                                min(measurement) as minm,
+                                cast(avg(measurement) as decimal(8, 1)) as meanm,
+                                max(measurement) as maxm,
+                                concat(station_name, '=/', minm, '/', meanm, '/', maxm) as out
                               FROM read_parquet(
                                 '{file_name}.parquet')
                               GROUP BY station_name
@@ -35,10 +37,7 @@ process_file_duckdb <- function(file_name, parquet = FALSE) {
   }
   dbDisconnect(con)
  
-  df |>
-    mutate(out = paste0(station_name, "=/", min_measurement, "/", mean_measurement, "/", max_measurement)) |> 
-    pull(out) |>
-    paste0(collapse = ", ")
+  paste0(df$out, collapse = ", ")
 }
 
-# system.time(process_file_duckdb("Code/1BRC/measurements"))
+system.time(process_file_duckdb("Data/measurements", parquet = TRUE))

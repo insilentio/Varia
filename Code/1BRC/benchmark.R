@@ -1,14 +1,16 @@
 library(bench)
 
-source("Code/1BRC/baseRsingleThread.R")
-source("Code/1BRC/baseRmultiThread.R")
-source("Code/1BRC/baseRaggregate.R")
-source("Code/1BRC/baseRtapply.R")
-source("Code/1BRC/dplyr.R")
-source("Code/1BRC/datatable.R")
-source("Code/1BRC/duckDB.R")
+setwd(file.path(getwd(), "Code", "1BRC"))
 
-filename <- "Code/1BRC/measurements"
+source("R/baseRsingleThread.R")
+source("R/baseRmultiThread.R")
+source("R/baseRaggregate.R")
+source("R/baseRtapply.R")
+source("R/dplyr.R")
+source("R/datatable.R")
+source("R/duckDB.R")
+
+filename <- "Data/measurements"
 
 bm <- bench::mark(
         # single = process_file_single(filename),

@@ -1,3 +1,5 @@
+# using base R with tapply
+
 process_file_tapply <- function(file_name) {
   gc()
   
@@ -30,5 +32,4 @@ process_file_tapply <- function(file_name) {
   output
 }
 
-
-# system.time(process_file_tapply("Code/1BRC/measurements"))
+# system.time(process_file_tapply("Data/measurements"))

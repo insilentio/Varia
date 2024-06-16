@@ -1,3 +1,5 @@
+# using the data.table package and the included fread file reader
+
 library(data.table)
 
 process_file_datatable <- function(file_name) {
@@ -26,4 +28,4 @@ process_file_datatable <- function(file_name) {
   output
 }
 
-# system.time(process_file_datatable("Code/1BRC/measurements"))
+# system.time(process_file_datatable("Data/measurements"))

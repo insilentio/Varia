@@ -1,3 +1,5 @@
+# parallelization version for the base R version
+
 library(foreach)
 library(doParallel)
 
@@ -98,4 +100,4 @@ process_file_multi <- function(file_name) {
 }
 
 
-# system.time(process_file_multithread("Code/1BRC/measurements.txt"))
+# system.time(process_file_multithread("Data/measurements.txt"))
